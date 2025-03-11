@@ -2,10 +2,56 @@ import { IPost } from '../schemas/post'
 import { Request, Response } from 'express'
 import postService from '../services/postService'
 import { errorHandler } from '../utils/errorHandler'
+import { verifyMessage } from 'ethers'
+import { config } from '../config'
+import { logger } from '../utils/logger'
 
 class PostController {
 	async create(req: Request, res: Response) {
 		try {
+			const { signature, author, text }: IPost = req.body
+
+			if (!text || text.trim() === '') {
+				return res.status(400).json({
+					errors: [
+						{
+							status: '400',
+							title: 'Bad Request',
+							detail: 'Text is required and cannot be empty.',
+						},
+					],
+				})
+			}
+
+			if (!signature || signature.trim() === '') {
+				return res.status(400).json({
+					errors: [
+						{
+							status: '400',
+							title: 'Bad Request',
+							detail: 'Signed message is required and cannot be empty.',
+						},
+					],
+				})
+			}
+
+			if (!config.MESSAGE) throw new Error('Message not set')
+
+			const address = verifyMessage(config.MESSAGE, signature)
+
+			if (address.toLowerCase() !== author.toLowerCase()) {
+				return res.status(401).json({
+					errors: [
+						{
+							status: '401',
+							title: 'Unauthorized',
+							detail:
+								'Signature verification failed. Author does not match the signature.',
+						},
+					],
+				})
+			}
+
 			const post = await postService.create(req.body, req?.files?.picture)
 			res.json(post)
 		} catch (error) {
