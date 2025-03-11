@@ -14,6 +14,6 @@ export const connectDatabase = async () => {
 		isConnected = true
 		logger.info('Database connected successfully')
 	} catch (error) {
-		console.error('Failed to connect database', error)
+		logger.error('Failed to connect database', error)
 	}
 }
