@@ -34,8 +34,8 @@ yarn dev
 
 ```bash
 curl -X POST http://localhost:5000/api/posts \
-  -F "author=0xe9bd666655654cda6cb364893dc12b5f953b46c7" \
+  -F "author=0x0b6b2c52283c5857871682084498d8151ce9b059" \
   -F "text=This is the content of the sample post" \
   -F "date=2025-03-11T12:00:00Z" \
-  -F "signature=0x7a61597e9dcae3bea7e6c8519697e294c83320903a61f55cadee236ad8b6e38229160fa197e4b2d4e99ce333672bda78bcbd5384dd601a28d70ddf3a3f7f71f91c"
+  -F "signature=0xf4579734786e9c43c5f47773262df1d15ac2802eae3b7af6aec5b43f55ba25d472c59e277bd47c91342da838e034cf4f72c3fa66b87574667e06403aec8ab4fb1c"
 ```
