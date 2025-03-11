@@ -4,7 +4,8 @@ import postService from '../services/postService'
 import { errorHandler } from '../utils/errorHandler'
 import { verifyMessage } from 'ethers'
 import { config } from '../config'
-import { logger } from '../utils/logger'
+import zkRegistryService from '../services/zkRegistryService'
+import { ZERO_HANDLE_HASH } from '../constants'
 
 class PostController {
 	async create(req: Request, res: Response) {
@@ -47,6 +48,19 @@ class PostController {
 							title: 'Unauthorized',
 							detail:
 								'Signature verification failed. Author does not match the signature.',
+						},
+					],
+				})
+			}
+
+			const handleHash = await zkRegistryService.contract.userHandles(author)
+			if (handleHash === ZERO_HANDLE_HASH) {
+				return res.status(403).json({
+					errors: [
+						{
+							status: '403',
+							title: 'Forbidden',
+							detail: 'User has not completed the zkPass verification.',
 						},
 					],
 				})

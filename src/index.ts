@@ -20,7 +20,7 @@ app.use('/api', postRouter)
 async function bootstrap() {
 	try {
 		await connectDatabase()
-		app.listen(Number(config.PORT), () => {
+		app.listen(config.PORT, () => {
 			logger.info(`Server started at ${config.PORT}`)
 		})
 	} catch (error) {

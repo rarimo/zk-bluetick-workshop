@@ -7,18 +7,21 @@
 		"dev": "nodemon",
 		"start": "ts-node src/index.ts",
 		"build": "tsc",
-		"serve": "node dist/index.js"
+		"serve": "node dist/index.js",
+		"generate-ether-types": "typechain --target=ethers-v6 'src/abis/**/*.json' --out-dir src/types/contracts"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+		"@typechain/ethers-v6": "^0.5.1",
 		"@types/express": "^5.0.0",
 		"@types/express-fileupload": "^1.5.1",
 		"@types/node": "^22.13.1",
 		"express": "^4.21.2",
 		"nodemon": "^3.1.9",
 		"ts-node": "^10.9.2",
+		"typechain": "^8.3.2",
 		"typescript": "^5.7.3"
 	},
 	"dependencies": {
