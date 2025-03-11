@@ -5,7 +5,8 @@ import fileService from './fileService'
 class PostService {
 	async create(post: IPost, picture?: UploadedFile | UploadedFile[]) {
 		const fileName = fileService.saveFile(picture)
-		const createdPost = await Post.create({ ...post, picture: fileName })
+		const date = new Date().toISOString()
+		const createdPost = await Post.create({ ...post, picture: fileName, date })
 		return createdPost
 	}
 

@@ -1,6 +1,7 @@
 import { UploadedFile } from 'express-fileupload'
 import * as uuid from 'uuid'
 import path from 'path'
+import { logger } from '../utils/logger'
 
 class FileService {
 	saveFile(file?: UploadedFile | UploadedFile[]) {
@@ -12,7 +13,7 @@ class FileService {
 				return fileName
 			}
 		} catch (error) {
-			console.log(error)
+			logger.error(error)
 		}
 	}
 }

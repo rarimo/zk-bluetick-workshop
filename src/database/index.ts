@@ -1,18 +1,19 @@
 import mongoose from 'mongoose'
+import { logger } from '../utils/logger'
 
 let isConnected = false
 
 export const connectDatabase = async () => {
 	if (isConnected) {
-		console.log('Database already connected')
+		logger.info('Database already connected')
 		return
 	}
 
 	try {
 		await mongoose.connect(process.env.DB_URL as string)
 		isConnected = true
-		console.log('Database connected successfully')
+		logger.info('Database connected successfully')
 	} catch (error) {
-		console.log('Failed to connect database', error)
+		console.error('Failed to connect database', error)
 	}
 }
