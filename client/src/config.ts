@@ -13,6 +13,8 @@ export interface Config {
   REOWN_ID: string
   ZK_PASS_SCHEMA_ID: string
   ZK_PASS_APP_ID: string
+
+  MESSAGE: string
 }
 
 export const config: Config = {
@@ -24,6 +26,7 @@ export const config: Config = {
   REOWN_ID: import.meta.env.VITE_REOWN_ID,
   ZK_PASS_SCHEMA_ID: import.meta.env.VITE_ZK_PASS_SCHEMA_ID,
   ZK_PASS_APP_ID: import.meta.env.VITE_ZK_PASS_APP_ID,
+  MESSAGE: import.meta.env.VITE_MESSAGE,
 }
 
 export interface NetworkConfig {

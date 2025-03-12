@@ -1,13 +1,14 @@
 import { useEvent } from '@reactuses/core'
 import TransgateConnect from '@zkpass/transgate-js-sdk'
 import { utils } from 'ethers'
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { config } from '@/config'
 import {
   bus,
   BusEvents,
   createContract,
+  ErrorHandler,
   formatProof,
   generateProof,
   truncateBigIntTo24Bytes,
@@ -22,6 +23,8 @@ export enum ZkFilesUrls {
   CommitmentBuilderZkey = 'https://zkpass-public.nyc3.digitaloceanspaces.com/CommitmentBuilder.groth16.zkey',
 }
 
+const ZERO_HANDLE_HASH = '0x0000000000000000000000000000000000000000000000000000000000000000'
+
 type ZkPassConnectorResult = {
   taskId: string
   publicFields: unknown[]
@@ -34,6 +37,7 @@ type ZkPassConnectorResult = {
 }
 
 export const useZkRegistry = () => {
+  const [isZkPassChecking, setIsZkPassChecking] = useState(true)
   const { rawProviderSigner, address } = useWeb3Context()
   const zkRegistry = useMemo(() => {
     if (!rawProviderSigner) return null
@@ -138,10 +142,28 @@ export const useZkRegistry = () => {
     [zkRegistry],
   )
 
+  const checkZkPass = useCallback(
+    async (address: string) => {
+      setIsZkPassChecking(true)
+      try {
+        return (await zkRegistry?.contractInstance.userHandles(address)) !== ZERO_HANDLE_HASH
+      } catch (error) {
+        ErrorHandler.process(error)
+        return false
+      } finally {
+        setIsZkPassChecking(false)
+      }
+    },
+    [zkRegistry?.contractInstance],
+  )
+
   return {
     isTransgateAvailable,
     zkRegistry: zkRegistry?.contractInstance,
     registerUserOnZkRegistry,
     getSmtProofPayload,
+
+    checkZkPass,
+    isZkPassChecking,
   }
 }

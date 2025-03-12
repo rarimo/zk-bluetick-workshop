@@ -1,47 +1,57 @@
-import { Box, Paper, Stack, Typography, useTheme } from '@mui/material'
+import { Box, CircularProgress, Paper, Stack, Typography, useTheme } from '@mui/material'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
-import { formatDateDM } from '@/helpers'
+import { ErrorHandler, formatTimeFromNow } from '@/helpers'
 
 interface Post {
-  id: string
+  _id: string
   text: string
   picture?: string
   date: string
 }
 
-const posts: Post[] = [
-  {
-    id: '1',
-    text: 'Today is a good day',
-    date: '2021-10-01T12:00:00Z',
-  },
-  {
-    id: '2',
-    text: 'Welcome to my blog',
-    picture: 'https://picsum.photos/300',
-    date: '2021-10-02T12:00:00Z',
-  },
-  {
-    id: '3',
-    text: 'Hello, world!',
-    date: '2021-10-03T12:00:00Z',
-  },
-  {
-    id: '4',
-    text: 'This is a test post',
-    picture: 'https://picsum.photos/400',
-    date: '2021-10-04T12:00:00Z',
-  },
-]
+export default function PostsList({ refetchFlag }: { refetchFlag: boolean }) {
+  const [posts, setPosts] = useState<Post[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
 
-export default function PostsList() {
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/posts')
+        const data = response.data
+
+        const fetchedPosts: Post[] = data.map((post: Post) => ({
+          _id: post._id,
+          text: post.text,
+          picture: post?.picture,
+          date: post.date,
+        }))
+
+        setPosts(fetchedPosts)
+      } catch (error) {
+        ErrorHandler.process(error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPosts()
+  }, [refetchFlag])
+
+  if (loading) {
+    return (
+      <Stack alignItems='center' justifyContent='center'>
+        <CircularProgress />
+      </Stack>
+    )
+  }
+
   return (
     <Stack spacing={4}>
       <Typography variant='h4'>Posts</Typography>
       <Stack spacing={2}>
-        {posts.map(post => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        {posts?.toReversed().map(post => <PostCard key={post._id} post={post} />)}
       </Stack>
     </Stack>
   )
@@ -54,12 +64,12 @@ function PostCard({ post }: { post: Post }) {
     <Paper component={Stack} spacing={1}>
       <Typography variant='subtitle2'>{post.text}</Typography>
       <Typography variant='body3' color={palette.text.secondary}>
-        {formatDateDM(post.date)}
+        {formatTimeFromNow(post.date)}
       </Typography>
-      {post.picture && (
+      {post?.picture && (
         <Box
           component='img'
-          src={post.picture}
+          src={`http://localhost:5000/${post.picture}`}
           alt='Post picture'
           sx={{
             width: '100%',

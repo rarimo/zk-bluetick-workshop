@@ -1,6 +1,6 @@
 import { CssBaseline, Divider, ThemeProvider } from '@mui/material'
 import { useAppKit, useAppKitState } from '@reown/appkit/react'
-import { memo, useEffect, useMemo } from 'react'
+import { memo, useEffect, useMemo, useState } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import { createTheme } from '@/theme'
@@ -15,6 +15,8 @@ const App = () => {
   const { isInitialized: isWeb3Initialized, isCorrectNetwork } = useWeb3Context()
   const { close } = useAppKit()
   const { open: isOpen, loading: isLoading } = useAppKitState()
+
+  const [refetchFlag, setRefetchFlag] = useState(false)
 
   const theme = useMemo(() => createTheme(), [])
 
@@ -34,9 +36,9 @@ const App = () => {
         <ErrorBoundary fallback={<p>Something went wrong</p>}>
           <ToastsManager>
             <MainLayout>
-              <PostForm />
+              <PostForm onSubmit={() => setRefetchFlag(prev => !prev)} />
               <Divider />
-              <PostsList />
+              <PostsList refetchFlag={refetchFlag} />
             </MainLayout>
           </ToastsManager>
         </ErrorBoundary>

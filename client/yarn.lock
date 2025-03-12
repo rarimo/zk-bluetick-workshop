@@ -4578,6 +4578,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"axios@npm:^1.8.3":
+  version: 1.8.3
+  resolution: "axios@npm:1.8.3"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10c0/de75da9859adf0a6481d4af2b687db357a054d20f0d69b99d502b71dae3578326b1fdc0951dabaef769827484941cda93d3f89150bf9e04f05f6615fb8316780
+  languageName: node
+  linkType: hard
+
 "axobject-query@npm:^4.1.0":
   version: 4.1.0
   resolution: "axobject-query@npm:4.1.0"
@@ -12831,6 +12842,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.12.2"
     "@vitejs/plugin-react-swc": "npm:^3.5.0"
     "@zkpass/transgate-js-sdk": "npm:^0.3.1"
+    axios: "npm:^1.8.3"
     esbuild: "npm:^0.19.8"
     eslint: "npm:^8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
