@@ -153,49 +153,53 @@ export default function PostForm({ onSubmit }: { onSubmit: () => void }) {
             onClose={() => setIsZkPassModalOpen(false)}
           />
         )}
-        <FormControl>
-          <TextField
-            inputRef={textfieldRef}
-            placeholder='What are you thinking about?'
-            multiline
-            rows={2}
-          />
-          <FormHelperText>Your address: {address}</FormHelperText>
-        </FormControl>
-        <Button
-          sx={{ width: 'fit-content' }}
-          variant='outlined'
-          component='label'
-          size='small'
-          role={undefined}
-          tabIndex={-1}
-        >
-          Upload photo
-          <VisuallyHiddenInput ref={imageRef} type='file' onChange={updatePicture} />
-        </Button>
-        {previewImage && (
-          <img
-            src={previewImage}
-            alt='Selected preview'
-            style={{
-              maxWidth: '100%',
-              borderRadius: 8,
-              marginTop: 8,
-              width: 80,
-              height: 50,
-              objectFit: 'cover',
-            }}
-          />
+        {isZkPassVerified && (
+          <Stack spacing={3}>
+            <FormControl>
+              <TextField
+                inputRef={textfieldRef}
+                placeholder='What are you thinking about?'
+                multiline
+                rows={2}
+              />
+              <FormHelperText>Your address: {address}</FormHelperText>
+            </FormControl>
+            <Button
+              sx={{ width: 'fit-content' }}
+              variant='outlined'
+              component='label'
+              size='small'
+              role={undefined}
+              tabIndex={-1}
+            >
+              Upload photo
+              <VisuallyHiddenInput ref={imageRef} type='file' onChange={updatePicture} />
+            </Button>
+            {previewImage && (
+              <img
+                src={previewImage}
+                alt='Selected preview'
+                style={{
+                  maxWidth: '100%',
+                  borderRadius: 8,
+                  marginTop: 8,
+                  width: 80,
+                  height: 50,
+                  objectFit: 'cover',
+                }}
+              />
+            )}
+            <Button
+              variant='contained'
+              size='medium'
+              sx={{ width: 160 }}
+              disabled={isZkPassChecking || !isZkPassVerified}
+              onClick={sendPost}
+            >
+              Post
+            </Button>
+          </Stack>
         )}
-        <Button
-          variant='contained'
-          size='medium'
-          sx={{ width: 160 }}
-          disabled={isZkPassChecking || !isZkPassVerified}
-          onClick={sendPost}
-        >
-          Post
-        </Button>
       </Stack>
     </>
   )

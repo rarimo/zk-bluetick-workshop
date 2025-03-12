@@ -4,9 +4,11 @@ import filedUpload from 'express-fileupload'
 import postRouter from './routes/post'
 import { logger } from './utils/logger'
 import { config } from './config'
+import cors from 'cors'
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 app.use(express.static('static'))
 app.use(
