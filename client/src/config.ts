@@ -1,7 +1,5 @@
 import { Chain, CHAIN_TYPES } from '@distributedlab/w3p'
-import { AppKitNetwork } from '@reown/appkit/networks'
 import { utils } from 'ethers'
-import { base } from 'viem/chains'
 
 export interface Config {
   ENV: 'development' | 'production'
@@ -34,15 +32,13 @@ export interface NetworkConfig {
   name: string
   rpcUrl: string
   explorerUrl: string
-  appKitChain: AppKitNetwork
 }
 
 export const NETWORK_CONFIG: NetworkConfig = {
-  chainId: base.id,
-  name: 'Base Mainnet',
-  rpcUrl: 'https://mainnet.base.org',
-  explorerUrl: 'https://basescan.org',
-  appKitChain: base,
+  chainId: 7368,
+  name: 'Rarimo Mainnet',
+  rpcUrl: 'https://l2.rarimo.com',
+  explorerUrl: 'https://scan.rarimo.com',
 }
 
 export const CONNECTOR_PARAMETERS: Chain = {
