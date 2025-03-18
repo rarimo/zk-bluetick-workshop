@@ -18,7 +18,7 @@ export default function PostsList({ refetchFlag }: { refetchFlag: boolean }) {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/posts')
+        const response = await axios.get('http://localhost:3000/api/posts')
         const data = response.data
 
         const fetchedPosts: Post[] = data.map((post: Post) => ({
@@ -69,7 +69,7 @@ function PostCard({ post }: { post: Post }) {
       {post?.picture && (
         <Box
           component='img'
-          src={`http://localhost:5000/${post.picture}`}
+          src={`http://localhost:3000/${post.picture}`}
           alt='Post picture'
           sx={{
             width: '100%',

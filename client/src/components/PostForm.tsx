@@ -106,7 +106,7 @@ export default function PostForm({ onSubmit }: { onSubmit: () => void }) {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/posts', formData, {
+      await axios.post('http://localhost:3000/api/posts', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

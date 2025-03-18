@@ -33,7 +33,7 @@ yarn dev
 ## Example using curl:
 
 ```bash
-curl -X POST http://localhost:5000/api/posts \
+curl -X POST http://localhost:3000/api/posts \
   -F "author=0x0b6b2c52283c5857871682084498d8151ce9b059" \
   -F "text=This is the content of the sample post" \
   -F "date=2025-03-11T12:00:00Z" \
